@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  audio-agent:
+    build: .
+    container_name: audio_agent_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

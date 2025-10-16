@@ -1,0 +1,8 @@
+setup_proyect.py
+
+
+.venv
+.venv/
+__pycache__
+*.pyc
+
