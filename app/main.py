@@ -6,15 +6,20 @@ app = FastAPI()
 agent = CorrectorAgent(llm_model=LLM_MODEL, base_url=LLM_BASE_URL)
 
 @app.post("/process_audio")
-async def process_audio(file: UploadFile):
-    text = await transcribe_audio(file)
-    corrected = await agent.correct_text(text)
+async def process_audio(file: UploadFile):  
+    text, language = await transcribe_audio(file)
+    corrected = await agent.correct_text(text, language)
     #response = response(corrected)
     return {"original": text, "corrected": corrected}
 
-@app.post("/correct-text")
+@app.post("/correct-text-en")
 async def correct_text(text: str):
-    result = await agent.correct_text(text)
+    result = await agent.correct_text(text, "en")  # Asumiendo inglés si no se proporciona
+    return result
+
+@app.post("/correct-text-fr")
+async def correct_text(text: str):
+    result = await agent.correct_text(text, "fr")  # Asumiendo inglés si no se proporciona
     return result
 
 @app.post("/correct-audio")
